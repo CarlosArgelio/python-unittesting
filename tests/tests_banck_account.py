@@ -3,6 +3,8 @@ import unittest
 
 from src.banck_account import BankAccount
 
+SERVER = "server_a"
+
 
 class BankAccountTests(unittest.TestCase):
 
@@ -36,3 +38,18 @@ class BankAccountTests(unittest.TestCase):
         assert self._count_lines(self.account.log_file) == 1
         self.account.deposit(100)
         assert self._count_lines(self.account.log_file) == 2
+
+    @unittest.skip("This test is skipped")
+    def test_skip(self):
+        self.assertEqual("hola", "chao")
+
+    @unittest.skipIf(SERVER == "server_a", "Saltada por que no estamos en el servidor")
+    def test_skip_if(self):
+        if self.account.balance < 1000:
+            self.skipTest("Balance is less than 1000")
+        self.account.withdraw(100)
+        self.assertEqual(self.account.balance, 900)
+
+    @unittest.expectedFailure
+    def expected_failure(self):
+        self.assertEqual("hola", "chao")
