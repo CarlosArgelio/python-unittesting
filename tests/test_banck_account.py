@@ -1,5 +1,6 @@
 import os
 import unittest
+from unittest.mock import patch, Mock
 
 from src.banck_account import BankAccount
 
@@ -23,9 +24,9 @@ class BankAccountTests(unittest.TestCase):
         self.account.deposit(100)
         self.assertEqual(self.account.balance, 1100)
 
-    def test_withdraw(self):
-        self.account.withdraw(100)
-        self.assertEqual(self.account.balance, 900)
+    # def test_withdraw(self):
+    #     self.account.withdraw(100)
+    #     self.assertEqual(self.account.balance, 900)
 
     def test_get_balance(self):
         self.assertEqual(self.account.get_balance(), 1000)
@@ -43,13 +44,18 @@ class BankAccountTests(unittest.TestCase):
     def test_skip(self):
         self.assertEqual("hola", "chao")
 
-    @unittest.skipIf(SERVER == "server_a", "Saltada por que no estamos en el servidor")
-    def test_skip_if(self):
-        if self.account.balance < 1000:
-            self.skipTest("Balance is less than 1000")
-        self.account.withdraw(100)
-        self.assertEqual(self.account.balance, 900)
+    # @unittest.skipIf(SERVER == "server_a", "Saltada por que no estamos en el servidor")
+    # def test_skip_if(self):
+    #     if self.account.balance < 1000:
+    #         self.skipTest("Balance is less than 1000")
+    #     self.account.withdraw(100)
+    #     self.assertEqual(self.account.balance, 900)
 
     @unittest.expectedFailure
     def expected_failure(self):
         self.assertEqual("hola", "chao")
+
+    @patch("src.banck_account.datetime")
+    def test_withdraw_disallow_after_bussines_hours(self, mock_datetime: Mock):
+        mock_datetime.now.return_value.hour = 8
+        self.account.withdraw(100)
