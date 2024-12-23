@@ -11,3 +11,8 @@ coverage html
 
 version con pytest https://github.com/JimcostDev/unit-testing
 documentacion https://docs.pytest.org/en/latest/
+
+# Tools IA
+- Github Copilot
+- Super maven
+- Chat GPT
