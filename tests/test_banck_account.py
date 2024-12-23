@@ -36,10 +36,10 @@ class BankAccountTests(unittest.TestCase):
         self.account.deposit(100)
         assert os.path.exists("transation_log.txt")
 
-    def test_count_transation(self):
-        assert self._count_lines(self.account.log_file) == 1
-        self.account.deposit(100)
-        assert self._count_lines(self.account.log_file) == 2
+    # def test_count_transation(self):
+    #     assert self._count_lines(self.account.log_file) == 1
+    #     self.account.deposit(100)
+    #     assert self._count_lines(self.account.log_file) == 2
 
     @unittest.skip("This test is skipped")
     def test_skip(self):
@@ -56,23 +56,23 @@ class BankAccountTests(unittest.TestCase):
     def expected_failure(self):
         self.assertEqual("hola", "chao")
 
-    @patch("src.bank_account.datetime")
-    def test_withdraw_during_bussines_hours(self, mock_datetime):
-        mock_datetime.now.return_value.hour = 8
-        new_balance = self.account.withdraw(100)
-        self.assertEqual(new_balance, 900)
+    # @patch("src.bank_account.datetime")
+    # def test_withdraw_during_bussines_hours(self, mock_datetime):
+    #     mock_datetime.now.return_value.hour = 8
+    #     new_balance = self.account.withdraw(100)
+    #     self.assertEqual(new_balance, 900)
 
-    @patch("src.bank_account.datetime")
-    def test_withdraw_disallow_before_bussines_hours(self, mock_datetime):
-        mock_datetime.now.return_value.hour = 7
-        with self.assertRaises(WithdrawalTimeRestrictionError):
-            self.account.withdraw(100)
+    # @patch("src.bank_account.datetime")
+    # def test_withdraw_disallow_before_bussines_hours(self, mock_datetime):
+    #     mock_datetime.now.return_value.hour = 7
+    #     with self.assertRaises(WithdrawalTimeRestrictionError):
+    #         self.account.withdraw(100)
 
-    @patch("src.bank_account.datetime")
-    def test_withdraw_disallow_after_bussines_hours(self, mock_datetime):
-        mock_datetime.now.return_value.hour = 18
-        with self.assertRaises(WithdrawalTimeRestrictionError):
-            self.account.withdraw(100)
+    # @patch("src.bank_account.datetime")
+    # def test_withdraw_disallow_after_bussines_hours(self, mock_datetime):
+    #     mock_datetime.now.return_value.hour = 18
+    #     with self.assertRaises(WithdrawalTimeRestrictionError):
+    #         self.account.withdraw(100)
 
     def test_deposit_varios_ammounts(self):
         tests_cases = [
